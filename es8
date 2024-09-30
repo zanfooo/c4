@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int nValori;
+    double valore;
+    double radice = 0.0;
+
+    printf("Quanti valori vuoi inserire? ");
+    scanf("%d", &nValori);
+
+    for(int i = 0; i < nValori; i++) {
+        printf("Inserisci il %d° valore: ", i + 1);
+        scanf("%lf", &valore);
+
+        if(valore >= 0) {
+            radice += sqrt(valore);
+        } else {
+            printf("Errore, il numero inserito non appartiene al dominio dei numeri reali\n");
+            return 1; // Terminazione con errore
+        }
+    }
+    
+    printf("La somma delle radici dei numeri inseriti è: %f\n", radice);
+    return 0;
+}
