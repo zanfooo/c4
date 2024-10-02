@@ -1,0 +1,19 @@
+/*Dato N un numero intero positivo, generare e visualizzare il numero 
+successivo.*/
+#include <stdio.h>
+
+int main(int argc, char* argv[])
+{
+    int n;
+    int nMod;
+    do{
+    printf("Inserisci il numero N interno positivo: ");
+    scanf("%d",&n);
+    }while(n<0);
+    
+    nMod = n + 1;
+    
+    printf("Il numero successivo a %d è: %d", n, nMod);
+
+    return 0;
+}
