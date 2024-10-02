@@ -1,0 +1,23 @@
+/*Dati due numeri interi positivi N1 e N2 con N2>N1, generare e
+visualizzare in ordine crescente i numeri interi compresi
+nell'intervallo chiuso [N1,N2]. */
+#include <stdio.h>
+
+int main(int argc, char* argv[])
+{
+    int n1;
+    int n2;
+    
+    do{
+    printf("Inserisci il numero N1 interno positivo: ");
+    scanf("%d",&n1);
+    printf("Inserisci il numero N2 interno positivo: ");
+    scanf("%d",&n2);
+    }while(n1<0 && n2<0);
+    
+    for(int i = n1; i<n2; i++){
+        printf("%d ", i);
+    }
+
+    return 0;
+}
