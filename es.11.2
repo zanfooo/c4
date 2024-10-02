@@ -1,0 +1,24 @@
+/*Dato N un numero intero positivo, generare e visualizzare in ordine crescente i primi N numeri
+interi positivi.*/
+#include <stdio.h>
+
+int main(int argc, char* argv[])
+{
+    int n;
+    int nNumeri;
+    int j;
+    
+    do{
+    printf("Inserisci il numero N interno positivo: ");
+    scanf("%d",&n);
+    printf("Inserisci quanti numeri vuoi visualizzare in ordidne crescente ");
+    scanf("%d",&nNumeri);
+    }while(n<0);
+    
+    for(int i = 0; i<=nNumeri; i++){
+        j = n+i+1;
+        printf("%d \n", j);
+    }
+
+    return 0;
+}
