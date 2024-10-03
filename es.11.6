@@ -1,0 +1,20 @@
+/*Dato N un numero intero positivo, generare e visualizzare in ordine
+crescente i numeri compresi maggiori uguali di -N e minori uguali di N.*/
+#include <stdio.h>
+
+int main(int argc, char* argv[])
+{
+    int n1;
+    int n2;
+    
+    do{
+    printf("Inserisci il numero N interno positivo: ");
+    scanf("%d",&n1);
+    }while(n1<0);
+    
+    for(int i = -n1; i<n1; i++){
+        printf("%d ", i);
+    }
+
+    return 0;
+}
