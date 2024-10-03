@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     scanf("%d",&n1);
     printf("Inserisci il numero N2 interno positivo: ");
     scanf("%d",&n2);
-    }while(n1<0 && n2<0);
+    }while(n1<0 && n2<0 && n2<n1);
     
     for(int i = n1; i<n2; i++){
         printf("%d ", i);
