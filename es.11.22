@@ -4,14 +4,15 @@ danno per somma il numero stesso. Non considerare la proprietà commutativa. */
 
 int main(int argc, char *argv[])
 {
-    int n;
+    int n, n1;
+    int somma;
     do{
     printf("Inserisci un numero intero positivo N: ");
     scanf("%d", &n);
     }while(n < 0);
+    n1= n/2;
     
-    for(int i = 0; i < n; i++){
-        int somma;
+    for(int i = 0; i < n1+1; i++){
         for(int j = n-i; j > 0; j--){
         somma = i + j; 
         if(somma == n)
