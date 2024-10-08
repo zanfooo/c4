@@ -1,0 +1,31 @@
+/*Dati due numeri interi positivi N1 ed N2 calcolare, mediante la somma
+ripetuta, il prodotto dei due numeri e visualizzarli.*/
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    int n1;
+    int n2;
+    int somma1;
+    int somma2;
+    int prodotto;
+    do{
+    printf("Inserisci il numero intero positivo: ");
+    scanf("%d", &n1);
+    printf("Inserisci il secondo intero positivo: ");
+    scanf("%d", &n2);
+    }while(n1 < 0 && n2 < 0);
+    
+    for(int i = n1; i > 0; i-- ){
+        somma1 = somma1 +i;
+        
+    }
+    
+    for(int i = n2; i > 0; i-- ){
+        somma2 = somma2 +i;
+        
+    }
+    prodotto = somma1 * somma2;
+    printf("Il prodotto dei due numeri è: %d", prodotto);
+    return 0;
+}
