@@ -1,0 +1,21 @@
+/*Dato N un numero intero positivo, calcolare e visualizzare la somma dei
+primi N numeri dispari.*/
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    int n;
+    int somma;
+    do{
+    printf("Inserisci il numero intero positivo: ");
+    scanf("%d", &n);
+    }while(n < 0);
+    
+    for(int i = n; i > 0; i-- ){
+        if(i%2 != 0)
+        somma = somma +i;
+        
+    }
+    printf("La somma dei primi N numeri interi è: %d", somma);
+    return 0;
+}
