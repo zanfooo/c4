@@ -1,0 +1,20 @@
+/*Dato un numero intero positivo N verificare se N è un numero primo.*/
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    int n;
+    do{
+    printf("Inserisci un numero intero positivo N: ");
+    scanf("%d", &n);
+    }while(n < 0);
+    
+    if(n%2!=0 && n%3!=0){
+        printf("%d è un numero primo", n);
+    }else{
+        printf("%d NON è un numero primo", n);
+    }
+
+    
+    return 0;
+}
