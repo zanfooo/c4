@@ -1,0 +1,34 @@
+/*Data una misura di tempo espressa in secondi S1, convertirla in ore H,
+minuti M e secondi S.
+
+Esempio: se il numero dei secondi è 1630, si dovrà ottenere, in uscita
+dal programma, 0h 27m 10s.*/
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    int S1;
+    int H;
+    int restoH;
+    int M;
+    int restoM;
+    int S;
+    do{
+    printf("Inserisci una misura di tempo espressa in secondi intera positiva: ");
+    scanf("%d", &S1);
+    }while(S1 < 0);
+    
+    /*H = S1%3600;
+    restoH = S1 - H*3600;
+    M = restoH%60;
+    restoM = restoH - M*60;
+    S = restoM;*/
+    
+    M = S1 / 60;
+	S = S1 % 60;
+	H = M / 60;
+	M = M % 60;
+
+    printf("%dh %dm %ds", H, M, S);
+    return 0;
+}
