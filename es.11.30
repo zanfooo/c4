@@ -1,0 +1,24 @@
+/*Dati due numeri interi positivi N1 e N2, verificare se N1 è il quadrato 
+di N2. */
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    int n1; 
+    int n2;
+    int quadrato;
+    do{
+    printf("Inserisci il primo numero intero positivo: ");
+    scanf("%d", &n1);
+    printf("Inserisci il secondo numero intero positivo: ");
+    scanf("%d", &n2);
+    }while(n1 <= 0 && n2 <= 0);
+    
+    quadrato = n2*n2;
+    if(quadrato == n1){
+       printf("Il primo numero %d è il quadrato di %d", n1, n2);
+    }else{
+        printf("Il primo numero %d NON è il quadrato di %d", n1, n2);
+    }
+    return 0;
+}
