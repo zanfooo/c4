@@ -1,0 +1,18 @@
+/*Popolare un array di interi di dimensione 4, stamparne a video il
+contenuto.*/
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    int vettore[4];
+    for(int i = 0; i < 4; i++){
+        printf("Inserisci il %d numero: ", i+1);
+        scanf("%d", &vettore[i]);
+    }
+    
+    for(int i = 0; i < 4; i++){
+        printf("\n %d", vettore[i]);
+    }
+
+    return 0;
+}
