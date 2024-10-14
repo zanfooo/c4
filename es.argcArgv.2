@@ -1,0 +1,26 @@
+/*Si scriva un programma che calcoli l’elevazione a potenza del valore intero
+passato come primo argomento per il secondo argomento intero.
+
+Esempio:
+
+$./es 2 3 
+2 ^ 3 = 8*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    
+    if (argc != 3) {
+        printf("Numero di argomenti errato.\n");
+        exit(1);
+    }
+
+    int somma =  0;
+    int n1 = atoi(argv[2]);
+    int n2 = atoi(argv[3]);
+    for(int i = 0; i < n2; i++){
+        somma = n1 * n1;
+    }
+    printf("%d ^ %d = %d", n1, n2, somma);
+    return 0;
+}
