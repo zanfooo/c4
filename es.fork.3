@@ -1,0 +1,37 @@
+/* Data una stringa letta da riga di comando si scriva un programma in linguaggio C
+che istanzi un processo figlio il quale converta la stringa da minuscolo a maiuscolo
+
+esempio di esecuzione:
+$./a.out ciao
+la stringa in maiuscolo è CIAO
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(int argc, char *argv[]) {
+    int pid;
+
+    //creazione del figlio 
+    pid = fork();
+
+    //stringa di argv1
+    char str[strlen(argv[1])];
+
+    if(pid == 0){
+    int n = strlen(str);
+	for (int i = 0; i < n; i++)
+	{
+		str[i] = toupper(str[i]);
+        printf("la stringa in maiuscolo è: %s\n\n", str);
+		sleep(5);
+		exit(2);
+	}
+    }
+    else
+	{
+		wait(&pid);
+	}
+    return 0;
+}
+    
