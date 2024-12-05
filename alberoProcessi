@@ -3,9 +3,9 @@
 #include <unistd.h>
 
 int main() {
-    int p1, p2, p3, p4;
+    int p1, p2, p3, p4, p5;
 
-    // Creazione del primo figlio F1
+    //creazione del primo figlio F1
     p1 = fork();
     
     if (p1 < 0) {
@@ -51,31 +51,32 @@ int main() {
 
         // Creazione dei figli F4 e F5
         p4 = fork();  // Creazione di F4
-if (p4 < 0) {
-    perror("Errore nella creazione di F4");
-    exit(1);
-}
+        if (p4 < 0) {
+            perror("Errore nella creazione di F4");
+            exit(1);
+        }
 
-if (p4 == 0) {
-    // Processo F4
-    printf("F4 (PID: %d) - Figlio di F2\n", getpid());
-    exit(0);
-}
+        if (p4 == 0) {
+            // Processo F4
+            printf("F4 (PID: %d) - Figlio di F2\n", getpid());
+            exit(0);
+        }
 
-p5 = fork();  // Creazione di F5
-if (p5 < 0) {
-    perror("Errore nella creazione di F5");
-    exit(1);
-}
+        p5 = fork();  // Creazione di F5
+        if (p5 < 0) {
+            perror("Errore nella creazione di F5");
+            exit(1);
+        }
 
-if (p5 == 0) {
-    // Processo F5
-    printf("F5 (PID: %d) - Figlio di F2\n", getpid());
-    exit(0);
-}
+        if (p5 == 0) {
+            // Processo F5
+            printf("F5 (PID: %d) - Figlio di F2\n", getpid());
+            exit(0);
+        }
 
         // Processo padre F2 termina qui
         exit(0);
     }
+
     return 0;
 }
