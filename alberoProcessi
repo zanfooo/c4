@@ -50,31 +50,29 @@ int main() {
         printf("F2 (PID: %d) - Figlio di F0\n", getpid());
 
         // Creazione dei figli F4 e F5
-        p4 = fork();
-        
-        if (p4 < 0) {
-            perror("Errore nella creazione di F4");
-            exit(1);
-        }
+        p4 = fork();  // Creazione di F4
+if (p4 < 0) {
+    perror("Errore nella creazione di F4");
+    exit(1);
+}
 
-        if (p4 == 0) {
-            // Processo F4
-            printf("F4 (PID: %d) - Figlio di F2\n", getpid());
-            exit(0);
-        }
+if (p4 == 0) {
+    // Processo F4
+    printf("F4 (PID: %d) - Figlio di F2\n", getpid());
+    exit(0);
+}
 
-        p4 = fork();  // Creazione di F5
-        
-        if (p4 < 0) {
-            perror("Errore nella creazione di F5");
-            exit(1);
-        }
+p5 = fork();  // Creazione di F5
+if (p5 < 0) {
+    perror("Errore nella creazione di F5");
+    exit(1);
+}
 
-        if (p4 == 0) {
-            // Processo F5
-            printf("F5 (PID: %d) - Figlio di F2\n", getpid());
-            exit(0);
-        }
+if (p5 == 0) {
+    // Processo F5
+    printf("F5 (PID: %d) - Figlio di F2\n", getpid());
+    exit(0);
+}
 
         // Processo padre F2 termina qui
         exit(0);
