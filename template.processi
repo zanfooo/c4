@@ -1,0 +1,56 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <stdlib.h>  // Necessario per la funzione exit()
+
+int main() {
+    pid_t pid1, pid2, pid3;
+
+    // Creiamo il primo figlio
+    pid1 = fork();
+    if (pid1 == -1) {
+        perror("fork failed");
+        return 1;
+    } 
+    else if (pid1 == 0) {
+        // Codice eseguito dal primo figlio
+        printf("Sono il primo processo figlio, il mio PID è %d\n", getpid());
+        exit(0);  // Termina il primo figlio con un codice di uscita 0
+    }
+
+    // Creiamo il secondo figlio
+    pid2 = fork();
+    if (pid2 == -1) {
+        perror("fork failed");
+        return 1;
+    }
+    else if (pid2 == 0) {
+        // Codice eseguito dal secondo figlio
+        printf("Sono il secondo processo figlio, il mio PID è %d\n", getpid());
+        exit(0);  // Termina il secondo figlio con un codice di uscita 0
+    }
+
+    // Creiamo il terzo figlio
+    pid3 = fork();
+    if (pid3 == -1) {
+        perror("fork failed");
+        return 1;
+    }
+    else if (pid3 == 0) {
+        // Codice eseguito dal terzo figlio
+        printf("Sono il terzo processo figlio, il mio PID è %d\n", getpid());
+        exit(0);  // Termina il terzo figlio con un codice di uscita 0
+    }
+
+    // Codice eseguito dal processo genitore
+    printf("Sono il processo genitore, i miei figli hanno PID %d, %d, %d\n", pid1, pid2, pid3);
+
+    // Aspettiamo che tutti i figli finiscano
+    wait(NULL);  // Attende il primo figlio
+    wait(NULL);  // Attende il secondo figlio
+    wait(NULL);  // Attende il terzo figlio
+
+    printf("Il processo genitore termina dopo aver atteso tutti i figli.\n");
+
+    return 0;
+}
