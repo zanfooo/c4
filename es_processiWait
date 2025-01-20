@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+
+#define SIZE 3
+
+void P4(int v[]) {
+    int prodotto = 1;
+    for (int i = 0; i < SIZE; i++) {
+        prodotto *= v[i];
+    }
+    printf("P4: il prodotto delle componenti di V[] è %d\n", prodotto);
+    exit(0);
+}
+
+void P5(int v[]) {
+    double media = 0;
+    for (int i = 0; i < SIZE; i++) {
+        media += v[i];
+    }
+    media /= SIZE;
+    printf("P5: la media delle componenti di V[] è %.2f\n", media);
+    exit(0);
+}
+
+void P6(int v[]) {
+    int somma = 0;
+    for (int i = 0; i < SIZE; i++) {
+        somma += v[i];
+    }
+    printf("P6: la somma delle componenti di V[] è %d\n", somma);
+    exit(0);
+}
+
+int main() {
+    srand(time(NULL));
+    int V[SIZE];
+    pid_t pid;
+
+    // Processo padre P1
+    for (int i = 0; i < SIZE; i++) {
+        V[i] = rand() % 6; // Genera numeri casuali tra 0 e 5
+    }
+
+    pid = fork();
+    if (pid == 0) {
+        // Processo figlio P2
+        printf("P2: mio PID=%d, mio padre P1 ha PID=%d\n", getpid(), getppid());
+        pid_t pid_P4 = fork();
+        if (pid_P4 == 0) {
+            // Processo figlio P4
+            P4(V);
+        } else {
+            pid_t pid_P5 = fork();
+            if (pid_P5 == 0) {
+                // Processo figlio P5
+                P5(V);
+            }
+            wait(NULL); // Aspetta che P4 e P5 finiscano
+            exit(0);
+        }
+    } else {
+        // Processo padre P1
+        printf("P1: mio PID=%d, mio figlio P2 ha PID=%d\n", getpid(), pid);
+        
+        pid = fork();
+        if (pid == 0) {
+            // Processo figlio P3
+            printf("P3: mio PID=%d, mio padre P1 ha PID=%d\n", getpid(), getppid());
+            printf("P3: le componenti di V[] sono: %d, %d, %d\n", V[0], V[1], V[2]);
+            
+            pid_t pid_P6 = fork();
+            if (pid_P6 == 0) {
+                // Processo figlio P6
+                P6(V);
+            } else {
+                wait(NULL); // Aspetta che P6 finisca
+                exit(0);
+            }
+        } else {
+            // Processo padre P1 aspetta i figli
+            wait(NULL); // Aspetta che P2 finisca
+            wait(NULL); // Aspetta che P3 finisca
+        }
+    }
+    
+    return 0;
+}
