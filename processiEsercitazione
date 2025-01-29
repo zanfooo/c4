@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+
+int main(int argc, char *argv[]){
+
+    int pid1 = fork();
+
+    if (pid1 < 0)
+    {
+        perror("Errore nella creazione del processo");
+        exit(1);
+    }
+    if (pid1 == 0)
+    {
+        printf("Mi chiamo %d, sono il figlio di %d  \n", getpid(), getppid());
+
+            int pid2 = fork();
+        if (pid2 < 0)
+        {
+            perror("Errore nella creazione del processo");
+            exit(1);
+        }
+        if (pid2 == 0)
+        {
+            printf("Mi chiamo %d, sono il figlio di %d \n", getpid(), getppid());
+        }
+        if (pid2 > 0)
+        {
+            printf("Mi chiamo %d, sono il padre di %d \n", getpid(), pid2);
+            int pid3 = fork();
+            if (pid3 < 0)
+            {
+                perror("Errore nella creazione del processo");
+                exit(1);
+            }
+            if (pid3 == 0)
+            {
+                printf("Mi chiamo %d, sono il figlio di %d \n", getpid(), getppid());
+            }
+            if (pid3 > 0)
+            {
+                printf("Mi chiamo %d, sono il padre di %d \n", getpid(), pid3);
+            }
+        }
+    }
+    if (pid1 > 0)
+    {
+        printf("Mi chiamo %d, sono il padre di %d \n", getpid(), pid1);
+        
+        int pid4 = fork();
+            if (pid4 < 0)
+            {
+                perror("Errore nella creazione del processo");
+                exit(1);
+            }
+            if (pid4 == 0)
+            {
+                printf("Mi chiamo %d, sono il figlio di %d \n", getpid(), getppid());
+            }
+            if (pid4 > 0)
+            {
+                printf("Mi chiamo %d, sono il padre di %d \n", getpid(), pid4);
+            }
+    }
+        
+    return 0;
+}
