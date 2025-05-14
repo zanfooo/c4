@@ -1,0 +1,98 @@
+// Zanforlin Nicolò   4F   Fila B
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+#define dimensioneStringa 100
+#define dimensioneNome 50
+#define dimensioneStampa 150
+
+int main(int argc, char *argv[])
+{
+    FILE *origine, *copia;
+    char string[dimensioneStringa], nomeCognome[dimensioneNome];
+
+    // Inserisco una stringa da tastiera
+    printf("\nInserire una stringa: ");
+    fgets(string, dimensioneStringa, stdin);
+
+    // Scrivo la stringa in input.txt
+    origine = fopen("input.txt", "w");
+    if (origine == NULL)
+    {
+        printf("Errore nell'apertura del file");
+        exit(1);
+    }
+    fputs(string, origine);
+    fclose(origine);
+
+    int f1 = fork();
+    if (f1 == 0)
+    {
+        printf("\nSono il processo figlio F1, pid = %d", getpid());
+
+        origine = fopen("input.txt", "r");
+        copia = fopen("copia.txt", "w");
+
+        if (origine == NULL || copia == NULL)
+        {
+            printf("\nErrore nell'apertura dei file");
+            exit(1);
+        }
+
+        char s[dimensioneStringa];
+        fgets(s, dimensioneStringa, origine);
+        fputs(s, copia);
+        fclose(origine);
+        fclose(copia);
+
+        printf("\nCopia completata\n");
+        exit(0);
+    }
+
+    wait(NULL); // Attendo la fine di F1
+
+    int f2 = fork();
+    if (f2 == 0)
+    {
+        printf("\nSono il processo figlio F2, pid = %d", getpid());
+
+        copia = fopen("copia.txt", "a");
+        if (copia == NULL)
+        {
+            printf("Errore nell'apertura del file");
+            exit(1);
+        }
+
+        printf("\nInserire il proprio nome e cognome: ");
+        fgets(nomeCognome, dimensioneNome, stdin);
+        fputs(nomeCognome, copia);
+        fclose(copia);
+
+        printf("\nInserimento completato con successo");
+
+        // Stampa del contenuto del file copia.txt
+        copia = fopen("copia.txt", "r");
+        if (copia == NULL)
+        {
+            printf("Errore nell'apertura del file");
+            exit(1);
+        }
+
+        char stampa[dimensioneStampa];
+        printf("\nContenuto file copia:\n");
+        while (fgets(stampa, dimensioneStampa, copia) != NULL)
+        {
+            fputs(stampa, stdout);
+        }
+        fclose(copia);
+        exit(0);
+    }
+
+    wait(NULL); // Attendo la fine di F2
+
+    return 0;
+}
