@@ -1,0 +1,76 @@
+// Zanforlin_Nicolò.c 4F fila A
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+
+#define DIM_OPERA 500
+#define DIM_LINEA 256
+
+int main() {
+    pid_t f1, f2;
+
+    f1 = fork();
+    if (f1 == 0) {
+        // Processo figlio F1
+        FILE *titolo = fopen("titolo.txt", "w");
+        if (titolo == NULL) {
+            perror("Errore apertura titolo.txt");
+            exit(1);
+        }
+        fputs("Il mistero della montagna\n", titolo);
+        fclose(titolo);
+        printf("F1: titolo.txt creato\n");
+        exit(0);
+    }
+
+    wait(NULL); // Attendo F1 prima di generare F2
+
+    f2 = fork();
+    if (f2 == 0) {
+        // Processo figlio F2
+        FILE *opera = fopen("opera.txt", "w");
+        if (opera == NULL) {
+            perror("Errore apertura opera.txt");
+            exit(1);
+        }
+        char testo[DIM_OPERA];
+        printf("F2: Inserisci il testo dell'opera:\n");
+        fgets(testo, DIM_OPERA, stdin);
+        fputs(testo, opera);
+        fclose(opera);
+        printf("F2: opera.txt creato\n");
+        exit(0);
+    }
+
+    wait(NULL); // Attendo F2
+
+    // Processo padre P: unisco i due file
+    FILE *titolo = fopen("titolo.txt", "r");
+    FILE *opera = fopen("opera.txt", "r");
+    FILE *finale = fopen("finale.txt", "w");
+
+    if (titolo == NULL || opera == NULL || finale == NULL) {
+        perror("Errore apertura file per unione");
+        exit(1);
+    }
+
+    char linea[DIM_LINEA];
+    while (fgets(linea, DIM_LINEA, titolo) != NULL) {
+        fputs(linea, finale);
+    }
+
+    while (fgets(linea, DIM_LINEA, opera) != NULL) {
+        fputs(linea, finale);
+    }
+
+    fclose(titolo);
+    fclose(opera);
+    fclose(finale);
+
+    printf("Padre: finale.txt creato con successo\n");
+
+    return 0;
+}
