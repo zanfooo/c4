@@ -10,7 +10,7 @@
 #define dimensioneNome 50
 #define dimensioneStampa 150
 
-int main(int argc, char *argv[])
+int main()
 {
     FILE *origine, *copia;
     char string[dimensioneStringa], nomeCognome[dimensioneNome];
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
         printf("Errore nell'apertura del file");
         exit(1);
     }
-    fputs(string, origine);
+    fwrite(string, sizeof(char), strlen(string), origine);
     fclose(origine);
 
     int f1 = fork();
@@ -43,9 +43,10 @@ int main(int argc, char *argv[])
             exit(1);
         }
 
-        char s[dimensioneStringa];
-        fgets(s, dimensioneStringa, origine);
-        fputs(s, copia);
+        char buffer[dimensioneStringa];
+        size_t letti = fread(buffer, sizeof(char), dimensioneStringa, origine);
+        fwrite(buffer, sizeof(char), letti, copia);
+
         fclose(origine);
         fclose(copia);
 
@@ -69,7 +70,7 @@ int main(int argc, char *argv[])
 
         printf("\nInserire il proprio nome e cognome: ");
         fgets(nomeCognome, dimensioneNome, stdin);
-        fputs(nomeCognome, copia);
+        fwrite(nomeCognome, sizeof(char), strlen(nomeCognome), copia);
         fclose(copia);
 
         printf("\nInserimento completato con successo");
@@ -83,10 +84,11 @@ int main(int argc, char *argv[])
         }
 
         char stampa[dimensioneStampa];
+        size_t letti;
         printf("\nContenuto file copia:\n");
-        while (fgets(stampa, dimensioneStampa, copia) != NULL)
+        while ((letti = fread(stampa, sizeof(char), dimensioneStampa, copia)) > 0)
         {
-            fputs(stampa, stdout);
+            fwrite(stampa, sizeof(char), letti, stdout);
         }
         fclose(copia);
         exit(0);
